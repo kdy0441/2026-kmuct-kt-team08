@@ -4,7 +4,7 @@
 
 ## 하루짜리 MVP 범위
 
-- 장소:  잠실역 고정 또는 입력 가능
+- 장소: 잠실역 → 석촌역 고정 또는 입력 가능
 - 후보 경로: 실제 전체 길찾기 대신 3개 후보 비교
 - 핵심 사례:
   1. 야간 보행: 밝기와 일정 수준의 유동인구 선호
@@ -46,6 +46,11 @@
 - `backend/app/contracts.py`: 역할 사이에서 호출하는 함수 규격
 - `backend/app/data_models.py`: 원본 데이터 CSV 행 모델 (역할 3 소유)
 - `backend/requirements.txt`: Python 의존성 (pydantic v2 고정)
+- `backend/app/route_engine.py`, `routers/routes.py`, `main.py`: 역할 4 — 지도 그래프 위 선호 반영 길찾기, Hard Constraint, 점수, API
+- `backend/app/data_service.py`, `backend/data/`: 역할 3 — 실데이터 CSV 와 경로·선분 단위 집계
+- `backend/data/map/walk_graph.json`: OSM 보행망(잠실역~석촌역 일대). `scripts/build_walk_graph.py` 로 재생성
+- `backend/scripts/try_prompt.py`: 서버 없이 문장 하나로 전체 파이프라인 확인. `python scripts/try_prompt.py "밝은 길, 5분 우회 허용"`
+- 실행: `cd backend && python -m uvicorn app.main:app --reload` · 테스트: `python -m pytest -q tests`
 - `frontend/src/types/contracts.ts`: Frontend용 동일 타입
 - `docs/api-spec.md`: API 요청·응답과 오류 규격
 - `docs/architecture.md`: 전체 연결 순서

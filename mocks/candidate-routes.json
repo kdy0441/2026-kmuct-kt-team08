@@ -6,9 +6,9 @@
     "distanceM": 1200,
     "hasStairs": false,
     "coordinates": [
-      {"lat": 37.6101, "lng": 126.9972},
-      {"lat": 37.6068, "lng": 127.0105},
-      {"lat": 37.6031, "lng": 127.0249}
+      {"lat": 37.5133, "lng": 127.1001},
+      {"lat": 37.5094, "lng": 127.1034},
+      {"lat": 37.5055, "lng": 127.1067}
     ],
     "metrics": {
       "crowdScore": 87,
@@ -30,9 +30,9 @@
     "distanceM": 1500,
     "hasStairs": false,
     "coordinates": [
-      {"lat": 37.6101, "lng": 126.9972},
-      {"lat": 37.6092, "lng": 127.0118},
-      {"lat": 37.6031, "lng": 127.0249}
+      {"lat": 37.5133, "lng": 127.1001},
+      {"lat": 37.5118, "lng": 127.1060},
+      {"lat": 37.5055, "lng": 127.1067}
     ],
     "metrics": {
       "crowdScore": 18,
@@ -54,9 +54,9 @@
     "distanceM": 1350,
     "hasStairs": false,
     "coordinates": [
-      {"lat": 37.6101, "lng": 126.9972},
-      {"lat": 37.6044, "lng": 127.0098},
-      {"lat": 37.6031, "lng": 127.0249}
+      {"lat": 37.5133, "lng": 127.1001},
+      {"lat": 37.5080, "lng": 127.1010},
+      {"lat": 37.5055, "lng": 127.1067}
     ],
     "metrics": {
       "crowdScore": 64,

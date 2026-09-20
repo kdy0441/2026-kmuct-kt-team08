@@ -1,7 +1,8 @@
-"""원본 데이터 행 모델 (역할 3 소유).
+"""원본 데이터 행 모델.
 
-backend/data/*.csv 의 한 행 = 아래 모델 하나. 컬럼명은 docs/data-spec.md 와 동일합니다.
-data_service.py 는 CSV를 읽어 이 모델로 검증한 뒤 RouteMetrics 로 집계합니다.
+backend/data/*.csv 의 한 행 = 아래 모델 하나.
+현재 수집된 잠실역 반경 3km 데이터에 맞춰 S-DoT 실측 조도와
+환경소음 타입을 추가하고, 생활인구 population을 float로 허용합니다.
 """
 
 from enum import Enum
@@ -17,6 +18,7 @@ class ShadeType(str, Enum):
 
 
 class NoiseType(str, Enum):
+    ENVIRONMENT = "environment"
     TRAFFIC = "traffic"
     CONSTRUCTION = "construction"
     COMMERCIAL = "commercial"
@@ -59,7 +61,7 @@ class ShadeRow(BaseModel):
 
 
 class NoiseRow(BaseModel):
-    """교통·공사·상권 소음 — noise.csv"""
+    """환경·교통·공사·상권 소음 — noise.csv"""
 
     noise_id: str
     lat: float = Field(ge=-90, le=90)
@@ -69,14 +71,24 @@ class NoiseRow(BaseModel):
     noise_type: NoiseType
 
 
+class LightingRow(BaseModel):
+    """S-DoT 실측 조도 — lighting.csv"""
+
+    sensor_id: str
+    lat: float = Field(ge=-90, le=90)
+    lng: float = Field(ge=-180, le=180)
+    illuminance_lux: float = Field(ge=0)
+    measured_at: str  # ISO 8601, 시간대 오프셋 포함
+
+
 class CrowdGridRow(BaseModel):
     """유동인구(혼잡도) — crowd_grid.csv. 격자 하나 × 시간대 하나 = 한 행"""
 
     grid_id: str
-    lat: float = Field(ge=-90, le=90)  # 격자 중심
+    lat: float = Field(ge=-90, le=90)
     lng: float = Field(ge=-180, le=180)
-    time_slot: int = Field(ge=0, le=23)  # 시(hour)
-    population: int = Field(ge=0)
+    time_slot: int = Field(ge=0, le=23)
+    population: float = Field(ge=0)
     crowd_score: float = Field(ge=0, le=100)
 
 

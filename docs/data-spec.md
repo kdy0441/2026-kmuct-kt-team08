@@ -16,6 +16,19 @@ Frontend·AI·Backend 담당은 이 문서를 몰라도 됩니다. 이들이 보
 | 행사 | `events.csv` | `event_id, lat, lng, start_time, end_time, is_active, expected_attendance` | `EventRow` |
 | 상권 위치 | `store_zones.csv` | `zone_id, lat, lng, zone_type, store_count` | `StoreZoneRow` |
 
+실데이터 추가 파일 (역할 3):
+
+| 파일 | 내용 | 갱신 방법 |
+|---|---|---|
+| `lighting.csv` | S-DoT 실측 조도 `sensor_id, lat, lng, illuminance_lux, measured_at` | `python scripts/fetch_sdot_env.py` |
+| `sdot_sensors.csv` | S-DoT 센서 좌표표 `sensor_id, lat, lng` (API 에 좌표가 없어 조인용) | 수동 |
+| `sources.json` | 파일별 출처명. `"mock"`/파일 없음이면 응답 `isMockData=true` | 수동 |
+| `crowd_grid.source.md`, `fetch_crowd_grid.py`, `poi_catalog.csv` | 유동인구 격자 출처와 생성기 | `python data/fetch_crowd_grid.py` |
+
+`fetch_sdot_env.py` 는 `SEOUL_OPENAPI_KEY` 환경변수(.env)를 쓰며 잠실역 3km 안 센서만 남기고, 같은 센서·시각의 `DATA_NO=1,2` 중 2를 택해 `noise.csv`(평균 소음)와 `lighting.csv`(평균 조도)에 병합한다.
+
+집계 반경은 실데이터 밀도에 맞춰 `data_service.py` 에서 조정했다: 생활인구 격자(250m 간격) 180m, S-DoT 센서(범위 안 18개) 400m 거리 역가중, 조도 = max(가로등 밀도, 실측 lux·log 스케일 50 lux=100점).
+
 공통 규칙:
 
 - 인코딩 UTF-8, 헤더 1행, 좌표 WGS84

@@ -96,7 +96,9 @@ AI 해석이 실패했을 때 사용하는 값입니다. 가중치 합은 1.0이
 
 ## 5. 시연 고정 데이터
 
-`mocks/candidate-routes.json`의 후보 3개는 두 사례가 **동일하게** 공유합니다. 두 응답(`mocks/response-night.json`, `mocks/response-crowd-avoidance.json`)의 차이는 오직 `PreferenceProfile`에서만 나와야 합니다. 이것이 발표의 핵심 증거입니다.
+`mocks/candidate-routes.json`의 후보 3개는 두 사례가 **동일하게** 공유합니다. 두 응답(`mocks/response-night.json`, `mocks/response-crowd-avoidance.json`)의 차이는 오직 `PreferenceProfile`에서만 나옵니다. 이 mock 은 점수·순위 함수의 정답지입니다.
+
+실제 그래프 기반 경로 생성(`USE_MOCK_DATA=false`)에서는 선호가 **길찾기 비용에도** 들어갑니다. 선분마다 조도·혼잡·조용함·그늘을 미리 계산해 두고 `비용 = 길이 × (1 + λ × Σ 가중치 × (1 − 효용/100))`으로 Dijkstra 를 돌리므로, 밝기를 원하면 가로등 많은 길이 **만들어집니다**. `avoidStairs`·`avoidActiveEvents`는 해당 선분을 아예 막고, `maxExtraMinutes`를 넘으면 λ를 줄여 다시 찾습니다. 후보는 최단 경로 · 맞춤 경로 · 대안 경로이며, 그 뒤 1~3절은 동일하게 적용됩니다.
 
 실데이터에서는 `crowdScore`(시간대별 격자)와 `lightingScore`(야간 상권 보정)가 출발 시각에 따라 달라집니다. 발표용 두 사례는 시간대와 무관하게 이 고정값으로 시연합니다. 고정값은 `data-spec.md` 공식으로 **정확히** 재현되는 값이 아니라 그럴듯한 수준으로 맞춘 값입니다.
 

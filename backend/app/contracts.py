@@ -4,7 +4,7 @@
 팀 합의 없이 변경하지 않습니다.
 """
 
-from typing import List
+from typing import List, Optional
 
 from .schemas import (
     CandidateRoute,
@@ -19,8 +19,15 @@ def parse_preference(request: RouteRequest) -> PreferenceProfile:
     raise NotImplementedError
 
 
-def load_candidate_routes(request: RouteRequest) -> List[CandidateRoute]:
-    """역할 3/4: 후보 경로 3개와 경로별 정규화 지표를 반환."""
+def load_candidate_routes(
+    request: RouteRequest,
+    profile: Optional[PreferenceProfile] = None,
+) -> List[CandidateRoute]:
+    """역할 3/4: 후보 경로 3개와 경로별 정규화 지표를 반환.
+
+    profile 이 있으면 선호를 길찾기 비용에 반영해 "맞춤 경로"를 만든다 (지도 앱의 큰길 우선처럼).
+    없으면 선호와 무관한 후보를 만든다. 기존 호출(request 만)은 그대로 동작한다.
+    """
     raise NotImplementedError
 
 

@@ -5,7 +5,7 @@
 1. Frontend가 `RouteRequest`를 `POST /api/v1/routes/recommend`로 전송합니다.
 2. Backend가 AI 모듈의 `parse_preference()`를 호출합니다.
 3. AI 모듈이 `PreferenceProfile`을 반환합니다.
-4. 데이터/경로 모듈이 `load_candidate_routes()`로 후보 3개를 반환합니다.
+4. 경로 모듈이 `load_candidate_routes(request, profile)`로 후보 3개를 반환합니다. 선호가 길찾기 비용에 들어가므로 후보는 **최단 경로 · 맞춤 경로 · 대안 경로**입니다 (지도 앱의 "큰길 우선"처럼, 밝기를 원하면 가로등 많은 길이 만들어집니다).
 5. Backend가 `apply_hard_constraints()`를 먼저 실행합니다.
 6. 남은 경로에 `score_and_rank_routes()`를 실행합니다.
 7. Backend가 `RouteRecommendationResponse`를 반환합니다.
